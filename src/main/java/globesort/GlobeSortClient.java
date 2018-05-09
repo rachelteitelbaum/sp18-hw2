@@ -61,8 +61,9 @@ public class GlobeSortClient {
  
 	/* measure application latency */
  	double sortTime = (response.getSortTime() / 1.0E09);
-        double appThroughput = values.length / sortTime;
-        System.out.println("Total Time to sort:" + sortTime);
+        double appLatency = (endTime/1.0E09) - (startTime/1.0E09);
+        double appThroughput = values.length / appLatency;
+        System.out.println("Total Time to sort:" + appLatency);
         System.out.println("Application Throughput in integers/sec:" + appThroughput);
         System.out.println();
 
