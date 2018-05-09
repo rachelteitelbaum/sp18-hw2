@@ -45,23 +45,33 @@ public class GlobeSortClient {
         long latencyPingNano = System.nanoTime() - startTime;
         double latencyPing = (latencyPingNano / 1.0E09);
         System.out.println("Ping successful. Latency in seconds:" + latencyPing);
+        System.out.println();
 
         System.out.println("Requesting server to sort array");
         IntArray request = IntArray.newBuilder().addAllValues(Arrays.asList(values)).build();
-        System.out.println("Sorted array");
         startTime = System.nanoTime();
         IntArray response = serverStub.sortIntegers(request);
         long endTime = System.nanoTime();
-        
+        System.out.println("Sorted array");
+        System.out.println();
+
+        System.out.println("Number of Integers Sorted:" + values.length);
+        System.out.println("Number of bytes traveling one way across the network:" + (values.length*4));
+        System.out.println();
+ 
 	/* measure application latency */
  	double sortTime = (response.getSortTime() / 1.0E09);
         double appThroughput = values.length / sortTime;
+        System.out.println("Total Time to sort:" + sortTime);
         System.out.println("Application Throughput in integers/sec:" + appThroughput);
+        System.out.println();
 
         /* measure one way network latency */
-        double netLatency = (endTime - startTime - sortTime) / 2;
+        double netLatency = ((endTime/1.0E09) - (startTime/1.0E09) - sortTime) / 2;
         double netThroughput = (values.length * 4) / netLatency;
+        System.out.println("Total Time to across network:" + netLatency);
         System.out.println("One way network throughput in bytes/sec:" + netThroughput);
+        System.out.println();
         
     }
 
