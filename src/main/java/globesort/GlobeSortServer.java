@@ -93,6 +93,7 @@ public class GlobeSortServer {
             long totalTime = endTime - startTime;
             double totalSec = totalTime / 1.0E09;
             IntArray.Builder responseBuilder = IntArray.newBuilder();
+            responseBuilder.setField(sortTime, totalSec);
             for(Integer val : values) {
                 responseBuilder.addValues(val);
             }
